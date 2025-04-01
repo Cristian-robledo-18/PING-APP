@@ -1,0 +1,19 @@
+{
+  "name": "ping-app",
+  "version": "1.0.0",
+  "description": "A simple application to ping local network devices and return results in JSON format.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "express": "^5.1.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

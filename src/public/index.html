@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping App</title>
+</head>
+<body>
+    <h1>Ping App</h1>
+    <form id="pingForm">
+        <label for="ipInput">Dirección IP:</label>
+        <input type="text" id="ipInput" name="ip" placeholder="Ingresa la dirección IP" required>
+        <button type="submit">Hacer Ping</button>
+    </form>
+    <h2>Resultados:</h2>
+    <pre id="results"></pre>
+
+    <script>
+        document.getElementById('pingForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evitar recargar la página
+
+            const ip = document.getElementById('ipInput').value;
+            const resultsElement = document.getElementById('results');
+
+            // Limpiar resultados previos
+            resultsElement.textContent = 'Cargando...';
+
+            try {
+                const response = await fetch('http://localhost:3005/ping', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ip })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                resultsElement.textContent = JSON.stringify(data, null, 2); // Mostrar resultados en formato JSON
+            } catch (error) {
+                resultsElement.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
